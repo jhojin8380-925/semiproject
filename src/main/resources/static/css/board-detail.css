@@ -1,0 +1,96 @@
+/* ══════════════════════════════════════════
+   board-detail.css — 게시글 상세 전용 스타일
+   공통 스타일은 common.css 에서 로드
+   ══════════════════════════════════════════ */
+
+/* ── 컨테이너 ──────────────────────────── */
+.container {
+    width: 900px;
+    margin: 36px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border: 1px solid #dddddd;
+}
+
+h2 { font-size: 20px; margin-bottom: 18px; }
+h3 { font-size: 16px; margin-bottom: 12px; }
+
+/* ── 게시글 본문 ───────────────────────── */
+.board-detail { margin-bottom: 30px; }
+
+.board-detail h2 {
+    font-size: 20px;
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 12px;
+    margin-bottom: 0;
+}
+
+.board-meta {
+    font-size: 13px;
+    color: #666666;
+    border-bottom: 1px solid #dddddd;
+    padding: 10px 0;
+    margin-bottom: 0;
+}
+
+.board-meta span { margin-right: 20px; }
+
+.board-content {
+    padding: 20px 0;
+    font-size: 15px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    min-height: 120px;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 14px;
+}
+
+.board-actions { margin-bottom: 10px; }
+.board-actions a,
+.board-actions button,
+.board-actions form { margin-right: 6px; }
+
+/* ── 댓글 영역 ─────────────────────────── */
+.comment-section { border-top: 2px solid #333333; padding-top: 20px; }
+.comment-section h3 { margin-bottom: 14px; }
+
+.comment-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.comment-author { font-weight: bold; color: #4f46e5; min-width: 70px; }
+.comment-content { flex: 1; }
+.comment-date { font-size: 12px; color: #999999; }
+
+.comment-form {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #dddddd;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1px solid #cccccc;
+    margin-bottom: 8px;
+    resize: vertical;
+}
+
+.login-required {
+    margin-top: 16px;
+    padding: 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #eeeeee;
+    font-size: 14px;
+    color: #666666;
+    text-align: center;
+}
+
+.login-required a { color: #4f46e5; }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">	
+	
+<body>
+	<!-- ===== 네비게이션 바 ===== -->
+	<!--
+		th:fragment="nav" - 이 태그에 이름을 붙여서 다른 html에서 불러다가 쓸 수 있게 함
+							다른 파일에서 th:replace="~{fragments/layout::nav}"
+	-->
+	<nav th:fragment="nav" class="nav-bar">
+	    <a class="nav-title" th:href="@{/board/list}">📋 세미 프로젝트 게시판</a>
+		<!-- 비 로그인 상태 -->	
+	    <div class="nav-links">
+			<th:block th:if="${session.loginMember == null}">
+	        <a th:href="@{/member/login}">로그인</a>
+	        <a th:href="@{/member/join}">회원가입</a>
+			</th:block>
+			<!-- 로그인 상태일때 표시-->
+			<th:block th:unless="${session.loginMember == null}">
+				<span class="nav-name" th:text="${session.loginMember.memberName}">이름</span>님 환영합니다
+				<a th:href="@{/member/logout}">로그아웃</a>
+				<a th:href="@{/board/write}" class="btn btn-primary"
+				style="font-size:13px; padding:5px 12px;">게시글 쓰기</a>
+			</th:block>
+	    </div>
+	</nav>
+
+	<!-- 로그인 상태 (위 nav-bar 대신 사용)
+	<nav class="nav-bar">
+	    <a class="nav-title" href="01_list.html">📋 세미 프로젝트 게시판</a>
+	    <div class="nav-links">
+	        <span class="nav-name">홍길동</span>님 환영합니다
+	        <a href="#">로그아웃</a>
+	    </div>
+	</nav>
+	-->
+	
+</body>
+</html>

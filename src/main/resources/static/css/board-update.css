@@ -1,0 +1,44 @@
+/* ══════════════════════════════════════════
+   board-update.css — 게시글 수정 전용 스타일
+   공통 스타일은 common.css 에서 로드
+   ══════════════════════════════════════════ */
+
+/* ── 컨테이너 ──────────────────────────── */
+.container {
+    width: 900px;
+    margin: 36px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border: 1px solid #dddddd;
+}
+
+h2 { font-size: 20px; margin-bottom: 18px; }
+
+/* ── 수정 폼 ───────────────────────────── */
+.write-form .form-group { margin-bottom: 16px; }
+
+.write-form label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.write-form input[type="text"] {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1px solid #cccccc;
+}
+
+.write-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1px solid #cccccc;
+    resize: vertical;
+}
+
+.form-actions { margin-top: 10px; display: flex; gap: 8px; }

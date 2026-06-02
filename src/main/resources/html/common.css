@@ -1,0 +1,73 @@
+/* ══════════════════════════════════════════
+   common.css — 모든 페이지 공통 스타일
+   nav-bar, 버튼, body 등 공유 요소
+   ══════════════════════════════════════════ */
+
+/* ── 리셋 ──────────────────────────────── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    background-color: #f5f5f5;
+    color: #333333;
+    font-size: 14px;
+}
+
+/* ── 네비게이션 바 ─────────────────────── */
+.nav-bar {
+    background-color: #2d3a4a;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+.nav-title {
+    font-size: 17px;
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #cccccc;    /* "님 환영합니다" 텍스트 색상 */
+    font-size: 13px;
+}
+
+.nav-links a {
+    color: #cccccc;
+    text-decoration: none;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+.nav-links a:hover { color: #ffffff; }
+
+.nav-links .nav-name {
+    color: #7dd3fc;    /* 로그인한 사용자 이름 — 하늘색으로 구분 */
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* ── 버튼 ──────────────────────────────── */
+.btn {
+    display: inline-block;
+    padding: 7px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid #999999;
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.btn:hover { opacity: 0.85; }
+.btn-primary   { background-color: #4f46e5; color: #ffffff; border-color: #4f46e5; }
+.btn-secondary { background-color: #666666; color: #ffffff; border-color: #666666; }
+.btn-danger    { background-color: #cc0000; color: #ffffff; border-color: #cc0000; }
+.btn-sm        { padding: 3px 8px; font-size: 12px; }

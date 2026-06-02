@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!-- namespace : 이 xml 과 연결할 Mapper 인터페이스 전체 경로 -->
+<mapper namespace="com.example.semiproject.mapper.MemberMapper">
+
+	<!-- [회원가입] member 테이블에 새 행 삽입 -->
+	<insert id="insertMember" parameterType="com.example.semiproject.dto.MemberDTO">
+		INSERT INTO MEMBER(MEMBER_LOGINID, MEMBER_NAME, MEMBER_EMAIL, MEMBER_PWD, MEMBER_PHONE)
+		VALUES(#{memberLoginId}, #{memberName}, #{memberEmail}, #{memberPwd}, #{memberPhone})
+	</insert>
+	
+	<!-- 
+		[아이디 중복 확인]
+		count(*) - 조건에 맞는 행의 개수를 반환
+		아이디가 존재하면 1, 없다면 0을 반환
+	 -->
+	<select id="countByLoginId" resultType="int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_LOGINID = #{loginId}
+	</select>
+	
+	<!-- 
+		[로그인] => 아이디와 비밀번호가 모두 일치하는 회원 조회 
+		두 조건이 모두 맞는 행이 없으면 MyBatis가 null을 반환
+		-> Service에서 null여부로 로그인 성공, 실패를 판단
+		
+	-->
+	
+	
+	<select id="selectByLoginIdAndPwd" resultType="com.example.semiproject.dto.MemberDTO">
+		SELECT MEMBER_ID, 
+			   MEMBER_LOGINID, 
+			   MEMBER_NAME, 
+			   MEMBER_EMAIL,  
+			   MEMBER_PHONE
+		FROM MEMBER
+		WHERE MEMBER_LOGINID = #{loginId} AND MEMBER_PWD = #{pwd}
+	</select>
+		
+</mapper>
+    
+    
+    
+    
+    
+    
+    
+    
+    

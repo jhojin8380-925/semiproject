@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 수정</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="board-update.css">
+</head>
+<body>
+
+<nav class="nav-bar">
+    <a class="nav-title" href="01_list.html">📋 세미 프로젝트 게시판</a>
+    <div class="nav-links">
+        <span class="nav-name">홍길동</span>님 환영합니다
+        &nbsp;
+        <a href="01_list.html">로그아웃</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>게시글 수정</h2>
+
+    <!--
+        action="/board/update/{boardId}" — POST /board/update/10 으로 폼 전송
+        기존 데이터가 input에 미리 채워진 상태로 시작됨
+    -->
+    <form class="write-form" action="#" method="post">
+
+        <div class="form-group">
+            <label for="boardTitle">제목</label>
+            <!--
+                value="..." — 기존 제목이 미리 채워짐
+                Thymeleaf: th:value="${board.boardTitle}"
+            -->
+            <input type="text"
+                   id="boardTitle"
+                   name="boardTitle"
+                   value="Spring Boot와 MyBatis 연동하는 방법 정리"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="boardContent">내용</label>
+            <!--
+                기존 내용이 미리 채워짐
+                Thymeleaf: th:text="${board.boardContent}"
+                (textarea는 value 속성이 아닌 태그 안 텍스트로 값 설정)
+            -->
+            <textarea id="boardContent"
+                      name="boardContent"
+                      rows="14"
+                      required>Spring Boot와 MyBatis를 연동하려면 먼저 build.gradle에 의존성을 추가해야 합니다.
+
+1. implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+2. runtimeOnly 'com.mysql:mysql-connector-j'
+
+그리고 application.properties에 DB 연결 정보와 MyBatis 설정을 추가합니다.</textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">수정 완료</button>
+            <!--
+                취소 시 해당 게시글 상세보기로 돌아감
+                Thymeleaf: th:href="@{/board/detail/{id}(id=${board.boardId})}"
+            -->
+            <a href="02_detail.html" class="btn btn-secondary">취소</a>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

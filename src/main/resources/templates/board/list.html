@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>세미 프로젝트 게시판 - 목록</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/board-list.css}">
+</head>
+<body>
+
+	<!-- fragments 사용 -layout.html의 nav를 이 자리에 삽입 -->
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+
+<div class="container">
+
+    <!-- ===== 검색 폼 ===== -->
+    <form class="search-form" action="#">
+        <input type="text" placeholder="제목 또는 작성자 검색" value="">
+        <button type="submit" class="btn btn-secondary">검색</button>
+        <!-- 검색 중일 때만 전체보기 버튼 표시 -->
+        <!-- <a href="01_list.html" class="btn">전체보기</a> -->
+    </form>
+
+    <!-- 검색 결과 안내 (검색 중일 때만 표시) -->
+    <!-- <p class="search-keyword">'Spring' 검색 결과</p> -->
+
+    <!-- ===== 게시글 목록 테이블 ===== -->
+    <table class="board-table">
+        <thead>
+            <tr>
+                <th style="width:70px">번호</th>
+                <th>제목</th>
+                <th style="width:100px">작성자</th>
+                <th style="width:120px">날짜</th>
+                <th style="width:70px">조회수</th>
+            </tr>
+        </thead>
+        <tbody>
+			<!-- 게시글이 없을 때 -->
+			<tr th:if="${#lists.isEmpty(boardList)}">
+				<td colspan="5" class="no-data">등록된 게시글이 없습니다.</td>
+			</tr>
+			<!--	
+				th:each = "board : ${boardList}"
+				boardList의 각 항목이 board 변수에 담겨 반복 출력
+			-->
+            <tr th:each="board : ${boardList}">
+                <td th:text="${board.boardId}"></td>
+                <td>
+					<a href="#"
+					   th:text="${board.boardTitle}"></a>
+				</td>
+                <td th:text="${board.memberLoginId}"></td>
+                <td th:text="${board.boardDate}"></td>
+                <td th:text="${board.boardHit}"></td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <!-- ===== 페이징 ===== -->
+    <div class="pagination">
+        <!-- <a href="#">◀ 이전</a> -->
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <!-- <a href="#">다음 ▶</a> -->
+    </div>
+
+</div>
+</body>
+</html>

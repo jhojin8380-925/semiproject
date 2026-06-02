@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/join.css}">
+</head>
+<body>
+
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+
+<div class="container-sm">
+    <h2>회원가입</h2>
+
+    <!-- 아이디 중복 시 오류 메시지 표시 (Thymeleaf: th:if="${param.error == 'duplicate'}") -->
+	<!--
+		th:if="${error == 'duplicate'}" => Controller에서
+		model.addAttribute("error", "duplicate")가 실행이 된다면
+		아래 오류 메시지를 출력
+	-->
+    <div th:if="${error == 'duplicate'}" class="error-msg">
+        이미 사용 중인 아이디입니다. 다른 아이디를 입력해 주세요.
+    </div>
+
+    <!--
+        action="/member/join" — POST /member/join 으로 폼 전송
+        폼의 각 input name 속성값이 MemberDTO 필드명과 일치해야
+        Spring이 자동으로 MemberDTO 객체에 값을 채워줌
+    -->
+    <form th:action="@{/member/join}" method="post">
+
+        <div class="form-group">
+            <label for="memberLoginId">아이디<span class="form-essential" style="color: red;"> * </span></label>
+            <!-- name="memberLoginId" → MemberDTO.memberLoginId -->
+            <input type="text"
+                   id="memberLoginId"
+                   name="memberLoginId"
+                   placeholder="아이디를 입력하세요"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="memberName">이름<span class="form-essential" style="color: red;"> * </span></label>
+            <!-- name="memberName" → MemberDTO.memberName -->
+            <input type="text"
+                   id="memberName"
+                   name="memberName"
+                   placeholder="이름을 입력하세요"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="memberEmail">이메일<span class="form-essential" style="color: red;"> * </span></label>
+            <!-- name="memberEmail" → MemberDTO.memberEmail -->
+            <input type="email"
+                   id="memberEmail"
+                   name="memberEmail"
+                   placeholder="이메일을 입력하세요"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="memberPwd">비밀번호<span class="form-essential" style="color: red;"> * </span></label>
+            <!-- name="memberPwd" → MemberDTO.memberPwd -->
+            <input type="password"
+                   id="memberPwd"
+                   name="memberPwd"
+                   placeholder="비밀번호를 입력하세요"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="memberPhone">전화번호</label>
+            <!-- name="memberPhone" → MemberDTO.memberPhone (선택 항목) -->
+            <input type="text"
+                   id="memberPhone"
+                   name="memberPhone"
+                   placeholder="010-0000-0000">
+            <p class="hint">선택 항목입니다.</p>
+        </div>
+
+        <div class="form-footer">
+            <a th:href="@{/member/login}" class="btn btn-secondary">로그인으로 이동</a>
+            <button type="submit" class="btn btn-primary">가입하기</button>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

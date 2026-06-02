@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세보기</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="board-detail.css">
+</head>
+<body>
+
+<!-- ===== 네비게이션 바 (로그인 상태) ===== -->
+<nav class="nav-bar">
+    <a class="nav-title" href="01_list.html">📋 세미 프로젝트 게시판</a>
+    <div class="nav-links">
+        <span class="nav-name">홍길동</span>님 환영합니다
+        &nbsp;
+        <a href="01_list.html">로그아웃</a>
+        &nbsp;
+        <a href="03_write.html" class="btn btn-primary" style="font-size:13px; padding:5px 12px;">게시글 쓰기</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- ===== 게시글 본문 ===== -->
+    <div class="board-detail">
+        <h2>Spring Boot와 MyBatis 연동하는 방법 정리</h2>
+
+        <div class="board-meta">
+            <span>작성자: <strong>hong</strong></span>
+            <span>날짜: 2025-05-31 10:23:45</span>
+            <span>조회수: 43</span>
+        </div>
+
+        <div class="board-content">Spring Boot와 MyBatis를 연동하려면 먼저 build.gradle에 의존성을 추가해야 합니다.
+
+1. implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+2. runtimeOnly 'com.mysql:mysql-connector-j'
+
+그리고 application.properties에 DB 연결 정보와 MyBatis 설정을 추가합니다.
+
+spring.datasource.url=jdbc:mysql://localhost:3306/semiproject
+mybatis.mapper-locations=classpath:mappers/*.xml
+mybatis.configuration.map-underscore-to-camel-case=true
+
+마지막으로 Mapper 인터페이스에 @Mapper 어노테이션을 붙이면 완성입니다!</div>
+
+        <!-- 수정·삭제 버튼 — 작성자 본인(hong)이 로그인한 경우에만 표시 -->
+        <div class="board-actions">
+            <a href="04_update.html" class="btn btn-secondary">수정</a>
+            <button class="btn btn-danger"
+                    onclick="if(confirm('정말 삭제하시겠습니까?')) alert('삭제 처리')">삭제</button>
+        </div>
+
+        <a href="01_list.html" class="btn">목록으로</a>
+    </div>
+
+    <!-- ===== 댓글 영역 ===== -->
+    <div class="comment-section">
+        <h3>댓글 <span id="commentCount">3</span>개</h3>
+
+        <div id="commentList">
+            <!-- 댓글 1 — 본인 댓글 (삭제 버튼 있음) -->
+            <div class="comment-item" id="comment-1">
+                <span class="comment-author">hong</span>
+                <span class="comment-content">좋은 정리 감사합니다! 많은 도움이 됐어요.</span>
+                <span class="comment-date">2025-05-31 11:00:12</span>
+                <button class="btn btn-sm btn-danger"
+                        onclick="if(confirm('댓글을 삭제하시겠습니까?')) this.closest('.comment-item').remove()">삭제</button>
+            </div>
+
+            <!-- 댓글 2 — 타인 댓글 (삭제 버튼 없음) -->
+            <div class="comment-item" id="comment-2">
+                <span class="comment-author">kim</span>
+                <span class="comment-content">저도 이 방법으로 연동했는데 잘 됐어요!</span>
+                <span class="comment-date">2025-05-31 13:22:05</span>
+            </div>
+
+            <!-- 댓글 3 — 타인 댓글 -->
+            <div class="comment-item" id="comment-3">
+                <span class="comment-author">lee</span>
+                <span class="comment-content">map-underscore-to-camel-case 설정 덕분에 매핑이 훨씬 편해졌네요.</span>
+                <span class="comment-date">2025-05-31 15:44:30</span>
+            </div>
+        </div>
+
+        <!-- 댓글 작성 폼 — 로그인 상태에서만 표시 -->
+        <div class="comment-form">
+            <textarea id="commentContent" rows="3"
+                      placeholder="댓글을 입력하세요 (최대 500자)"
+                      maxlength="500"></textarea>
+            <button class="btn btn-primary" onclick="alert('댓글 등록 (AJAX)')">댓글 등록</button>
+        </div>
+
+        <!-- 비로그인 상태일 때 표시 (위 comment-form 대신) -->
+        <!--
+        <div class="login-required">
+            <a href="05_login.html">로그인</a> 후 댓글을 작성할 수 있습니다.
+        </div>
+        -->
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>세미 프로젝트 게시판 - 목록</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="board-list.css">
+</head>
+<body>
+
+<!-- ===== 네비게이션 바 ===== -->
+<!-- 비로그인 상태 -->
+<nav class="nav-bar">
+    <a class="nav-title" href="01_list.html">📋 세미 프로젝트 게시판</a>
+    <div class="nav-links">
+        <a href="05_login.html">로그인</a>
+        <a href="06_join.html">회원가입</a>
+    </div>
+</nav>
+
+<!-- 로그인 상태 (위 nav-bar 대신 사용)
+<nav class="nav-bar">
+    <a class="nav-title" href="01_list.html">📋 세미 프로젝트 게시판</a>
+    <div class="nav-links">
+        <span class="nav-name">홍길동</span>님 환영합니다
+        <a href="#">로그아웃</a>
+    </div>
+</nav>
+-->
+
+<div class="container">
+
+    <!-- ===== 글쓰기 버튼 (로그인 상태에서만 표시) ===== -->
+    <div class="write-btn-area">
+        <a href="03_write.html" class="btn btn-primary">게시글 쓰기</a>
+    </div>
+
+    <!-- ===== 검색 폼 ===== -->
+    <form class="search-form" action="#">
+        <input type="text" placeholder="제목 또는 작성자 검색" value="">
+        <button type="submit" class="btn btn-secondary">검색</button>
+        <!-- 검색 중일 때만 전체보기 버튼 표시 -->
+        <!-- <a href="01_list.html" class="btn">전체보기</a> -->
+    </form>
+
+    <!-- 검색 결과 안내 (검색 중일 때만 표시) -->
+    <!-- <p class="search-keyword">'Spring' 검색 결과</p> -->
+
+    <!-- ===== 게시글 목록 테이블 ===== -->
+    <table class="board-table">
+        <thead>
+            <tr>
+                <th style="width:70px">번호</th>
+                <th>제목</th>
+                <th style="width:100px">작성자</th>
+                <th style="width:120px">날짜</th>
+                <th style="width:70px">조회수</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10</td>
+                <td><a href="02_detail.html">Spring Boot와 MyBatis 연동하는 방법 정리</a></td>
+                <td>hong</td>
+                <td>2025-05-31</td>
+                <td>42</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td><a href="02_detail.html">Thymeleaf th:each 반복문 활용법</a></td>
+                <td>kim</td>
+                <td>2025-05-30</td>
+                <td>28</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td><a href="02_detail.html">MySQL JOIN 쿼리 이해하기</a></td>
+                <td>lee</td>
+                <td>2025-05-29</td>
+                <td>35</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><a href="02_detail.html">세션(Session)과 쿠키(Cookie)의 차이</a></td>
+                <td>park</td>
+                <td>2025-05-28</td>
+                <td>19</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><a href="02_detail.html">AJAX fetch()로 댓글 기능 구현하기</a></td>
+                <td>hong</td>
+                <td>2025-05-27</td>
+                <td>51</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><a href="02_detail.html">Spring Boot 페이징 처리 완벽 정리</a></td>
+                <td>choi</td>
+                <td>2025-05-26</td>
+                <td>67</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><a href="02_detail.html">Git 기초 — add, commit, push 개념</a></td>
+                <td>kim</td>
+                <td>2025-05-25</td>
+                <td>22</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><a href="02_detail.html">HTML form과 Controller @RequestParam 연결법</a></td>
+                <td>lee</td>
+                <td>2025-05-24</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><a href="02_detail.html">DTO, DAO, Service, Controller 역할 정리</a></td>
+                <td>hong</td>
+                <td>2025-05-23</td>
+                <td>88</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td><a href="02_detail.html">처음으로 Spring Boot 프로젝트 생성해봤습니다!</a></td>
+                <td>park</td>
+                <td>2025-05-22</td>
+                <td>15</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ===== 페이징 ===== -->
+    <div class="pagination">
+        <!-- <a href="#">◀ 이전</a> -->
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <!-- <a href="#">다음 ▶</a> -->
+    </div>
+
+</div>
+</body>
+</html>

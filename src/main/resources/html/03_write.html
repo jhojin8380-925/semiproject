@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 작성</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="board-write.css">
+</head>
+<body>
+
+<nav class="nav-bar">
+    <a class="nav-title" href="01_list.html">📋 세미 프로젝트 게시판</a>
+    <div class="nav-links">
+        <span class="nav-name">홍길동</span>님 환영합니다
+        &nbsp;
+        <a href="01_list.html">로그아웃</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>게시글 작성</h2>
+
+    <!--
+        action="/board/write" — POST /board/write 로 폼 전송
+        method="post" — 제목·내용을 URL에 노출하지 않기 위해 POST 사용
+    -->
+    <form class="write-form" action="#" method="post">
+
+        <div class="form-group">
+            <label for="boardTitle">제목</label>
+            <!--
+                name="boardTitle" — BoardDTO.boardTitle 필드에 자동 매핑
+                required — 비어 있으면 브라우저가 제출을 막음
+            -->
+            <input type="text"
+                   id="boardTitle"
+                   name="boardTitle"
+                   placeholder="제목을 입력하세요"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="boardContent">내용</label>
+            <!--
+                name="boardContent" — BoardDTO.boardContent 필드에 자동 매핑
+            -->
+            <textarea id="boardContent"
+                      name="boardContent"
+                      rows="14"
+                      placeholder="내용을 입력하세요"
+                      required></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">등록</button>
+            <a href="01_list.html" class="btn btn-secondary">취소</a>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
