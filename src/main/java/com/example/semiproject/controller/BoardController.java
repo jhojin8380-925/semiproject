@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.semiproject.dto.BoardDTO;
 import com.example.semiproject.dto.MemberDTO;
@@ -23,15 +24,32 @@ public class BoardController {
 	private BoardService boardService;
 	
 //	----------------------------------
-//	[게시글 목록] GET /board/list
+//	[게시글 목록] GET /board/list?page=1
 
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model,
+						@RequestParam(value = "page", defaultValue = "1") int page) {
 		
-		List<BoardDTO> boardList = boardService.getBoardList();
+		int size = 10; // 한 페이지에 표시할 게시글 수
+		int offset = (page - 1) * size;
+		
+		List<BoardDTO> boardList = boardService.getBoardList(offset, size);
+		int totalCount = boardService.getBoardCount();
+		
+//		페이지 수 계산
+//		ex) 게시글 25개 / 10 = 2.5 => 올림 => 3페이지 필요
+		int totalPages = (int)Math.ceil((double)totalCount / size);
+//		- 게시글이 0개 일때 최소 1페이지 표시
+		if(totalPages == 0) {
+			totalPages = 1;
+		}
+		
 		
 //		Model.addAttribute("키", 값)
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		
 		
 		return "board/list";
 	}

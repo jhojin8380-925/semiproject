@@ -59,12 +59,19 @@
     </table>
 
     <!-- ===== 페이징 ===== -->
+	<!--
+		th:each="i : ${#numbers.sequence(1, totalPages)}
+		=> 1 ~ totalPages 까지 숫자 목록 만들어 주는 기능
+	-->
     <div class="pagination">
-        <!-- <a href="#">◀ 이전</a> -->
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <!-- <a href="#">다음 ▶</a> -->
+        <a th:if = "${currentPage > 1}" 
+			th:href="@{/board/list(page=${currentPage - 1})}">◀ 이전</a>
+        <a th:each="i : ${#numbers.sequence(1, totalPages)}"
+		   th:href="@{/board/list(page=${i})}"
+		   th:text="${i}"
+		   th:class="${i == currentPage} ? 'active' : ''"></a>
+        <a th:if="${currentPage < totalPages}" 
+			th:href="@{/board/list(page=${currentPage + 1})}">다음 ▶</a>
     </div>
 
 </div>
