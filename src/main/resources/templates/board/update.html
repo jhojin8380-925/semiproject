@@ -3,8 +3,8 @@
 <head> 
     <meta charset="UTF-8">
     <title>게시글 수정</title>
-    <link rel="stylesheet" href="common.css">
-    <link rel="stylesheet" href="board-update.css">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/board-update.css}">
 </head>
 <body>
 
@@ -17,7 +17,7 @@
         action="/board/update/{boardId}" — POST /board/update/10 으로 폼 전송
         기존 데이터가 input에 미리 채워진 상태로 시작됨
     -->
-    <form class="write-form" action="#" method="post">
+    <form class="write-form" th:action="@{/board/update/{id}(id=${board.boardId})}" method="post">
 
         <div class="form-group">
             <label for="boardTitle">제목</label>
@@ -28,7 +28,7 @@
             <input type="text"
                    id="boardTitle"
                    name="boardTitle"
-                   value="Spring Boot와 MyBatis 연동하는 방법 정리"
+                   th:value="${board.boardTitle}"
                    required>
         </div>
 
@@ -42,12 +42,8 @@
             <textarea id="boardContent"
                       name="boardContent"
                       rows="14"
-                      required>Spring Boot와 MyBatis를 연동하려면 먼저 build.gradle에 의존성을 추가해야 합니다.
-
-1. implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-2. runtimeOnly 'com.mysql:mysql-connector-j'
-
-그리고 application.properties에 DB 연결 정보와 MyBatis 설정을 추가합니다.</textarea>
+                      th:text="${board.boardContent}"
+					  required></textarea>
         </div>
 
         <div class="form-actions">
@@ -56,7 +52,7 @@
                 취소 시 해당 게시글 상세보기로 돌아감
                 Thymeleaf: th:href="@{/board/detail/{id}(id=${board.boardId})}"
             -->
-            <a href="02_detail.html" class="btn btn-secondary">취소</a>
+            <a th:href="@{/board/detail/{id}(id=${board.boardId})}" class="btn btn-secondary">취소</a>
         </div>
 
     </form>

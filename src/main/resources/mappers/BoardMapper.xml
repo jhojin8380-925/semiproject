@@ -6,7 +6,12 @@
 <mapper namespace="com.example.semiproject.mapper.BoardMapper">
 	<!-- [게시글 목록 조회] 페이징
 	JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID
-	board 와 member테이블을 연결해서 작성자 아이디를 함께 가져옴
+	-> board 와 member테이블을 연결해서 작성자 아이디를 함께 가져옴
+	
+	<where>/<if> - MyBatis 동적 SQL 태그
+	-> keyword 값이 있을때만 where 절을 자동으로 붙음
+	-> keyword가 비어 있으면 where절이 생성되지 않아 전체 목록 반환
+	
 	LIMIT #{size} OFFSET #{offset}
 	-->
 	<select id="selectAll" resultType="com.example.semiproject.dto.BoardDTO">
@@ -18,17 +23,65 @@
 			   m.MEMBER_LOGINID
 		FROM BOARD b
 		JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID
+		<where>
+			<!--
+				test="keyword != null and keyword != ''"
+				-> keyword가 null이 아니고 빈 문자열도 아닐 때만 이 조건 추가
+			-->
+			<if test="keyword != null and keyword != ''">
+				(b.BOARD_TITLE LIKE CONCAT('%', #{keyword}, '%')
+				OR m.MEMBER_LOGINID LIKE CONCAT('%', #{keyword}, '%'))
+			</if>
+		</where>
 		ORDER BY b.BOARD_ID DESC
 		LIMIT #{size} OFFSET #{offset}
 	</select>
 	<!--
 		[전체 게시글 수 조회] 페이징 계산용
+		selectAll과 동일한 검색 조건을 적용해야
+		페이지 수가 정확히 계산이 됨
 	-->
 	<select id="selectCount" resultType="int">
 		SELECT COUNT(*)
 		FROM BOARD b
 		JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID
-	</select>	
+		<where>
+			<!--
+				test="keyword != null and keyword != ''"
+				-> keyword가 null이 아니고 빈 문자열도 아닐 때만 이 조건 추가
+			-->
+			<if test="keyword != null and keyword != ''">
+				(b.BOARD_TITLE LIKE CONCAT('%', #{keyword}, '%')
+				OR m.MEMBER_LOGINID LIKE CONCAT('%', #{keyword}, '%'))
+			</if>
+		</where>
+	</select>
+	
+	<!--
+		[게시글 상세 조회] 게시글 1개를 join으로 조회
+	-->	
+	<select id="selectById" resultType="com.example.semiproject.dto.BoardDTO">
+		SELECT b.BOARD_ID,
+			   b.BOARD_TITLE,
+			   b.BOARD_CONTENT,
+			   b.BOARD_HIT,
+			   b.BOARD_DATE,
+			   b.MEMBER_ID,
+			   m.MEMBER_LOGINID
+		FROM BOARD b
+		JOIN MEMBER m ON b.MEMBER_ID = m.MEMBER_ID
+		WHERE b.BOARD_ID = #{boardId}
+	</select>
+	
+	<!--
+		[게시글 조회수 증가] 상세보기 요청 시 해당 게시글의 BOARD_HIT 값을 1 올림
+	-->
+	<update id="updateHit">
+		UPDATE BOARD
+			SET BOARD_HIT = BOARD_HIT + 1
+		WHERE BOARD_ID = #{boardId}
+	</update>
+	
 	
 	<!-- 
 		[게시글 등록]
@@ -37,4 +90,24 @@
 		INSERT INTO BOARD(BOARD_TITLE, BOARD_CONTENT, MEMBER_ID)
 			VALUES(#{boardTitle}, #{boardContent}, #{memberId})
 	</insert>
+	
+	<!--
+		[게시글 수정] 제목과 내용만 변경
+	-->
+	<update id="updateBoard">
+		UPDATE BOARD
+			SET BOARD_TITLE = #{boardTitle},
+				BOARD_CONTENT = #{boardContent}
+			WHERE BOARD_ID = #{boardId}
+	</update>
+	
+	<!--
+		[게시글 삭제] 해당 게시글 삭제
+	-->
+	<delete id="deleteBoard">
+		DELETE
+		FROM BOARD
+		WHERE BOARD_ID = #{boardId}
+	</delete>
+	
 </mapper>

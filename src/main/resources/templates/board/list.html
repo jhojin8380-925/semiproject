@@ -14,15 +14,21 @@
 <div class="container">
 
     <!-- ===== 검색 폼 ===== -->
-    <form class="search-form" action="#">
-        <input type="text" placeholder="제목 또는 작성자 검색" value="">
+	<!-- th:action, th:value : 검색어를 입력칸에 유지 -->
+    <form class="search-form" th:action="@{/board/list}" method="get">
+        <input type="text" name = "keyword"
+		placeholder="제목 또는 작성자 검색" th:value="${keyword}">
         <button type="submit" class="btn btn-secondary">검색</button>
         <!-- 검색 중일 때만 전체보기 버튼 표시 -->
-        <!-- <a href="01_list.html" class="btn">전체보기</a> -->
+        <a th:if="${keyword != null and keyword != ''}"
+		th:href="@{/board/list}" class="btn">전체보기</a>
     </form>
 
     <!-- 검색 결과 안내 (검색 중일 때만 표시) -->
-    <!-- <p class="search-keyword">'Spring' 검색 결과</p> -->
+    <p class="search-keyword"
+	th:if="${keyword != null and keyword != ''}">
+	'<strong th:text="${keyword}"></strong>' 검색 결과
+	</p>
 
     <!-- ===== 게시글 목록 테이블 ===== -->
     <table class="board-table">
@@ -47,7 +53,7 @@
             <tr th:each="board : ${boardList}">
                 <td th:text="${board.boardId}"></td>
                 <td>
-					<a href="#"
+					<a th:href="@{/board/detail/{id}(id=${board.boardId})}"
 					   th:text="${board.boardTitle}"></a>
 				</td>
                 <td th:text="${board.memberLoginId}"></td>
@@ -65,13 +71,13 @@
 	-->
     <div class="pagination">
         <a th:if = "${currentPage > 1}" 
-			th:href="@{/board/list(page=${currentPage - 1})}">◀ 이전</a>
+			th:href="@{/board/list(page=${currentPage - 1}, keyword=${keyword})}">◀ 이전</a>
         <a th:each="i : ${#numbers.sequence(1, totalPages)}"
-		   th:href="@{/board/list(page=${i})}"
+		   th:href="@{/board/list(page=${i}, keyword=${keyword})}"
 		   th:text="${i}"
 		   th:class="${i == currentPage} ? 'active' : ''"></a>
         <a th:if="${currentPage < totalPages}" 
-			th:href="@{/board/list(page=${currentPage + 1})}">다음 ▶</a>
+			th:href="@{/board/list(page=${currentPage + 1}, keyword=${keyword})}">다음 ▶</a>
     </div>
 
 </div>
