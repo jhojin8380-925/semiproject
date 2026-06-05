@@ -20,4 +20,5 @@ public interface MemberMapper {
 //	일치하는 회원이 없으면 null 반환
 	MemberDTO selectByLoginIdAndPwd(@Param("loginId") String loginId, @Param("pwd") String pwd);
 	
+	
 }

@@ -33,11 +33,12 @@
             th:if="${session.loginMember != null and session.loginMember.memberId == board.memberId}">
             <a th:href="@{/board/update/{id}(id=${board.boardId})}" 
               class="btn btn-secondary">수정</a>
-			<form th:action="@{/board/delete/{id}(id=${board.boardId})}" 
-				method="post" style="display:inline"
-			 	onsubmit="return(confirm('정말 삭제하시겠습니까?'))">
-            	<button class="btn btn-danger" type="submit" >삭제</button>
-			</form>
+            <!-- 삭제할 게시판 ID를 POST 방식으로 전달하여 DB에서 해당 게시글 삭제 -->
+            <form th:action="@{/board/delete/{id}(id=${board.boardId})}"
+               method="post" style="display:inline"
+               onsubmit="return (confirm('정말 삭제하시겠습니까?'))">
+               <button class="btn btn-danger" type="submit">삭제</button>
+            </form>
          </div>
 
          <a th:href="@{/board/list}" class="btn">목록으로</a>
@@ -45,37 +46,33 @@
 
       <!-- ===== 댓글 영역 ===== -->
       <div class="comment-section">
-         <h3>댓글 <span id="commentCount">3</span>개</h3>
+         <h3>댓글 <span id="commentCount" th:text="${#lists.size(commentList)}">0</span>개</h3>
 
          <div id="commentList">
-            <!-- 댓글 1 — 본인 댓글 (삭제 버튼 있음) -->
-            <div class="comment-item" id="comment-1">
-               <span class="comment-author">hong</span>
-               <span class="comment-content">좋은 정리 감사합니다! 많은 도움이 됐어요.</span>
-               <span class="comment-date">2025-05-31 11:00:12</span>
+            <!-- th:each : commetList의 각 댓글을 반복 출력 -->
+            <div class="comment-item"
+                th:each="comment : ${commentList}"
+                th:id="'comment-'+ ${comment.commentId}">
+               <span class="comment-author" th:text="${comment.memberLoginId}">작성자</span>
+               <span class="comment-content" th:text="${comment.commentContent}">내용</span>
+               <span class="comment-date" th:text="${comment.commentDate}">날짜</span>
                <button class="btn btn-sm btn-danger"
-                  onclick="if(confirm('댓글을 삭제하시겠습니까?')) this.closest('.comment-item').remove()">삭제</button>
-            </div>
-
-            <!-- 댓글 2 — 타인 댓글 (삭제 버튼 없음) -->
-            <div class="comment-item" id="comment-2">
-               <span class="comment-author">kim</span>
-               <span class="comment-content">저도 이 방법으로 연동했는데 잘 됐어요!</span>
-               <span class="comment-date">2025-05-31 13:22:05</span>
-            </div>
-	
-            <!-- 댓글 3 — 타인 댓글 -->
-            <div class="comment-item" id="comment-3">
-               <span class="comment-author">lee</span>
-               <span class="comment-content">map-underscore-to-camel-case 설정 덕분에 매핑이 훨씬 편해졌네요.</span>
-               <span class="comment-date">2025-05-31 15:44:30</span>
+                  th:if="${loginMemberId != null and loginMemberId == comment.memberId}"
+                  th:onclick = "'deleteComment(' + ${comment.commentId} + ')'">삭제</button>
             </div>
          </div>
 
          <!-- 댓글 작성 폼 — 로그인 상태에서만 표시 -->
-         <div class="comment-form" th:if="${session.loginMember != null}">
-            <textarea id="commentContent" rows="3" placeholder="댓글을 입력하세요 (최대 500자)" maxlength="500"></textarea>
-            <button class="btn btn-primary" onclick="alert('댓글 등록 (AJAX)')">댓글 등록</button>
+         <div th:if="${loginMemberId != null}">
+            <form class="comment-form" id="commentForm" onsubmit="return false">
+               <!-- hidden : Thymeleaf가 서버 데이터를 HTML에 삽입 -> js에서 읽기 가능 -->
+               <input type="hidden" id="boardId" th:value="${board.boardId}">
+               <input type="hidden" id="loginMemberId" th:value="${loginMemberId}">
+               <input type="hidden" id="loginMemberLoginId" th:value="${loginMemberLoginId}">
+               <textarea id="commentContent" rows="3" placeholder="댓글을 입력하세요 (최대 500자)" maxlength="500"></textarea>
+               <button class="btn btn-primary" type="button"
+                  onclick="submitComment()">댓글 등록</button>
+            </form>
          </div>
 
          <!-- 비로그인 상태일 때 표시 (위 comment-form 대신) -->
@@ -88,5 +85,5 @@
 
    </div>
 </body>
-
+<script th:src="@{/js/comment.js}"></script>
 </html>
